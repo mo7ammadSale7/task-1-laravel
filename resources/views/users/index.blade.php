@@ -72,14 +72,23 @@
                         <div class="form-group">
                             <label for="name" class="col-form-label">Name:</label>
                             <input type="text" class="form-control" id="name" name="name">
+                            @error('name')
+                                <small class="text-secondary">{{ $message }}</small>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-form-label">Email:</label>
                             <input type="email" class="form-control" id="email" name="email">
+                            @error('email')
+                                <small class="text-secondary">{{ $message }}</small>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="age" class="col-form-label">Age:</label>
                             <input type="number" class="form-control" id="age" name="age">
+                            @error('age')
+                                <small class="text-secondary">{{ $message }}</small>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="gender" class="col-form-label">gender:</label>
@@ -87,6 +96,9 @@
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                             </select>
+                            @error('gender')
+                                <small class="text-secondary">{{ $message }}</small>
+                            @enderror
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-secondary">Edit User</button>

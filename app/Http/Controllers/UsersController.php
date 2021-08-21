@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
@@ -25,13 +27,10 @@ class UsersController extends Controller
         return response()->json($user);
     }
 
-    public function update(Request $request) {
+    public function update(UserRequest $request) {
         $user = User::find($request->id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->age = $request->age;
-        $user->gender = $request->gender;
-        $user->save();
+
+        $user->update($request->all());
         return response()->json($user);
     }
 

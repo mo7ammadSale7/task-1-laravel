@@ -36,16 +36,25 @@
 											<span class="input-group-addon" id="name"><i class="icon-account_circle"></i></span>
 											<input type="text" class="form-control" placeholder="Name" name="name">
 										</div>
+                                        @error('name')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
 										<br>
 										<div class="input-group">
 											<span class="input-group-addon" id="email"><i class="icon-mail_outline"></i></span>
 											<input type="email" class="form-control" placeholder="Email" name="email">
 										</div>
+                                        @error('email')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                         <br>
                                         <div class="input-group">
                                             <span class="input-group-addon" id="age"><i class="icon-today"></i></span>
                                             <input type="number" class="form-control" name="age">
                                         </div>
+                                        @error('age')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                         <br>
                                         <div class="input-group">
                                             <span class="input-group-addon" id="gender"><i class="icon-accessibility2"></i></span>
@@ -54,11 +63,17 @@
                                                 <option value="female">Female</option>
                                             </select>
                                         </div>
+                                        @error('gender')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
 										<br>
 										<div class="input-group">
 											<span class="input-group-addon" id="password"><i class="icon-verified_user"></i></span>
-											<input type="password" class="form-control" placeholder="Password" name="password">
+											<input type="password" class="form-control" placeholder="Password" name="password" />
 										</div>
+                                        @error('password')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
 										<div class="actions clearfix">
 											<button type="submit" class="btn btn-primary">Signup</button>
 										</div>
