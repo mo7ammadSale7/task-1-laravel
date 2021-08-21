@@ -47,8 +47,7 @@
                             <td>
                                 <a href="/users/{{ $user->id }}"class="btn btn-success">Show</a>
                                 <a href="javascript:void(0)" onclick="editUser({{ $user->id }})" class="btn btn-warning" data-toggle="modal" data-target="#edit-modal">Edit</a>
-                                <a href="javascript:void(0)" onclick="deleteUser({{ $user->id }})" class="btn btn-danger">Delete</a>
-{{--                                <a href="javascript:void(0)" onclick="deleteUser({{ $user->id }})" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal">Delete</a>--}}
+                                <a href="javascript:void(0)" onclick="getId({{ $user->id }})" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal">Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -113,6 +112,28 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal delete -->
+    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm mt-5 mb-0" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="deleteUser()">delete</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <x-slot name="script">
     <script>
         function editUser(id) {
@@ -122,7 +143,6 @@
                 $('#email').val(user.email);
                 $('#age').val(user.age);
                 $('#gender').val(user.gender);
-                $('#edit-modal').modal('toggle');
             })
         }
     </script>
@@ -149,21 +169,24 @@
                 success: function(response) {
                     if(response) {
                         $('#id'+response.id).text(response.id)
-                        $('#name'+response.id).html(response.name);
+                        $('#name'+response.id).text(response.name);
                         $('#email'+response.id).text(response.email);
                         $('#gender'+response.id).text(response.gender);
                         $('#age'+response.id).text(response.age);
                         $('#edit-modal').modal('toggle');
                         $('#edit-user')[0].reset();
-
                     }
                 }
             })
         })
     </script>
     <script>
-        function deleteUser(id) {
-            if(confirm("Do you want to delete this user?")) {
+        let id;
+        function getId(user_id) {
+            id = user_id
+            return Number(id)
+        }
+        function deleteUser() {
                 $.ajax({
                     url: '/delete/'+id,
                     type: 'DELETE',
@@ -172,9 +195,9 @@
                     },
                     success: function(response) {
                         $('#user'+id).remove();
+                        $('#delete-modal').modal('toggle');
                     }
                 })
-            }
         }
     </script>
     <script>
@@ -198,3 +221,4 @@
     </script>
     </x-slot>
 </x-layout>
+</div>
