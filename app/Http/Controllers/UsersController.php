@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -12,8 +11,17 @@ class UsersController extends Controller
 {
     public function index() {
         return view('users.index', [
-            'users' => User::filter(request(['search', 'gender']))->simplePaginate(100)->withQueryString()
+            'users' => User::filter(request(['search', 'gender']))->paginate(50)->withQueryString()
         ]);
+    }
+
+    function fetch_data(Request $request)
+    {
+        if($request->ajax())
+        {
+            $users = User::filter(request(['search', 'gender']))->paginate(50)->withQueryString();
+            return view('users.index', compact('users'))->render();
+        }
     }
 
     public function show(User $user) {

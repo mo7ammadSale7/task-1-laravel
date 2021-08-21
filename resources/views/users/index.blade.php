@@ -1,3 +1,4 @@
+<div id="table_data">
 <x-layout>
     <form method="GET" action="/users">
         @if (request('gender'))
@@ -23,6 +24,7 @@
     <div class="card">
         <div class="card-header">All Users</div>
         <div class="card-body">
+                <div>
             <table class="table table-hover m-0" id="table-user">
                 <thead>
                 <tr>
@@ -53,8 +55,10 @@
                 </tbody>
             </table>
             {{ $users->links() }}
+                </div>
         </div>
     </div>
+
     <!-- Modal Edit -->
     <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -172,6 +176,25 @@
                 })
             }
         }
+    </script>
+    <script>
+        $(document).ready(function(){
+            $(document).on('click', '.pagination a', function(event){
+                event.preventDefault();
+                let page = $(this).attr('href').split('page=')[1];
+                fetch_data(page);
+            });
+            function fetch_data(page)
+            {
+                $.ajax({
+                    url:"/users?page="+page+"&",
+                    success:function(users)
+                    {
+                        $('#table_data').html(users);
+                    }
+                });
+            }
+        });
     </script>
     </x-slot>
 </x-layout>
